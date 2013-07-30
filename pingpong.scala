@@ -9,8 +9,8 @@ class Ping(count: Integer, pong: Actor) extends Actor {
   def act() {
     var pingsLeft = count - 1
     pong ! Ping
-    while (true) {
-      receive {
+    loop {
+      react {
         case Pong =>
           if (pingsLeft % 1000 == 0)
             Console.println("Ping: pong")
@@ -30,8 +30,8 @@ class Ping(count: Integer, pong: Actor) extends Actor {
 class Pong extends Actor {
   def act() {
     var pongCount = 0
-    while (true) {
-      receive {
+    loop {
+      react {
         case Ping => 
           if (pongCount % 1000 == 0) 
             Console.println("Pong: ping "+pongCount)
